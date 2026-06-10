@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard Fondation Dragon Bleu</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Dragon Bleu · Fondation hors Venum / Ringhorns / UFC</p>
+      <h1>Dashboard Fondation Produits</h1>
+      <p class="subtitle">Analyse interactive complète : références, marques, typologies produits, priorités, statuts et marchés depuis le 9 mars.</p>
+    </div>
+    <div class="hero-actions">
+      <button id="resetFilters" class="btn secondary">Réinitialiser</button>
+      <button id="exportCsv" class="btn primary">Exporter la vue CSV</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="filters card">
+      <div class="section-title">
+        <h2>Filtres</h2>
+        <span id="rowCounter">Chargement…</span>
+      </div>
+      <div class="filter-grid">
+        <label>Recherche produit / SKU / EAN
+          <input id="searchInput" type="search" placeholder="Ex : Hyperko, Fairtex, SGL-7…" />
+        </label>
+        <label>Marque
+          <select id="brandFilter"><option value="">Toutes</option></select>
+        </label>
+        <label>Type produit
+          <select id="typeFilter"><option value="">Tous</option></select>
+        </label>
+        <label>Statut fondation
+          <select id="statusFilter"><option value="">Tous</option></select>
+        </label>
+        <label>Priorité
+          <select id="priorityFilter"><option value="">Toutes</option></select>
+        </label>
+        <label>Marché depuis le 9 mars
+          <select id="marketFilter"><option value="">Tous</option></select>
+        </label>
+      </div>
+    </section>
+
+    <section class="kpis" id="kpiGrid"></section>
+
+    <section class="charts">
+      <article class="card chart-card"><h2>Top marques par CA TTC 12m</h2><canvas id="brandChart"></canvas></article>
+      <article class="card chart-card"><h2>Top types produits par CA TTC 12m</h2><canvas id="typeChart"></canvas></article>
+      <article class="card chart-card"><h2>Répartition par statut</h2><canvas id="statusChart"></canvas></article>
+      <article class="card chart-card"><h2>CA par marché depuis le 9 mars</h2><canvas id="marketChart"></canvas></article>
+    </section>
+
+    <section class="card insight-card">
+      <div class="section-title"><h2>Lecture business automatique</h2><span>Basée sur la vue filtrée</span></div>
+      <div id="insights" class="insights"></div>
+    </section>
+
+    <section class="tables">
+      <article class="card table-card wide">
+        <div class="section-title">
+          <h2>Références détaillées</h2>
+          <div class="pager"><button id="prevPage" class="btn small">←</button><span id="pageInfo"></span><button id="nextPage" class="btn small">→</button></div>
+        </div>
+        <div class="table-wrap"><table id="productTable"></table></div>
+      </article>
+      <article class="card table-card">
+        <div class="section-title"><h2>Synthèse marques</h2><span>Top 25</span></div>
+        <div class="table-wrap"><table id="brandTable"></table></div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="footer">Dashboard statique GitHub Pages · Données chargées depuis <code>/data/*.json</code></footer>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>
