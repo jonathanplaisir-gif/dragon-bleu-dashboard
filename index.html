@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard Fondation Dragon Bleu</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <div class="hero__copy">
+      <p class="eyebrow">Dragon Bleu · Fondation stock</p>
+      <h1>Dashboard interactif marques, produits, types et marchés</h1>
+      <p class="subtitle">Vue 12 mois, 6 mois, 3 mois et depuis le 09/03/2026, avec marché GB exclu des vues marchés.</p>
+    </div>
+    <div class="hero__meta">
+      <span id="source-file">Source : fichier Excel</span>
+      <span id="generated-on">Généré le —</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="panel controls" aria-label="Filtres du dashboard">
+      <div class="control-grid">
+        <label>
+          <span>Période</span>
+          <select id="period"></select>
+        </label>
+        <label>
+          <span>Vue</span>
+          <select id="dimension">
+            <option value="Marque">Marques</option>
+            <option value="Produit">Produits</option>
+            <option value="Type produit">Types de produits</option>
+            <option value="Marché">Marchés hors GB</option>
+            <option value="SKU">SKU</option>
+          </select>
+        </label>
+        <label>
+          <span>Métrique</span>
+          <select id="metric">
+            <option value="revenue">CA TTC</option>
+            <option value="qty">Quantités</option>
+          </select>
+        </label>
+        <label>
+          <span>Marque</span>
+          <select id="brand"></select>
+        </label>
+        <label>
+          <span>Type produit</span>
+          <select id="product-type"></select>
+        </label>
+        <label>
+          <span>Marché</span>
+          <select id="market"></select>
+        </label>
+        <label>
+          <span>Statut</span>
+          <select id="status"></select>
+        </label>
+        <label>
+          <span>Priorité</span>
+          <select id="priority"></select>
+        </label>
+        <label class="search-box">
+          <span>Recherche produit / SKU</span>
+          <input id="search" type="search" placeholder="Ex. Hyperko, BGVL3, protège-tibias…" />
+        </label>
+        <label>
+          <span>Lignes affichées</span>
+          <select id="limit">
+            <option value="25">25</option>
+            <option value="50" selected>50</option>
+            <option value="100">100</option>
+            <option value="250">250</option>
+            <option value="all">Toutes</option>
+          </select>
+        </label>
+      </div>
+      <div class="control-actions">
+        <button id="reset" class="button button--ghost">Réinitialiser</button>
+        <button id="export-aggregate" class="button">Exporter l’agrégat filtré</button>
+        <button id="export-detail" class="button">Exporter les lignes filtrées</button>
+      </div>
+      <p id="context-note" class="note"></p>
+    </section>
+
+    <section class="kpis" id="kpis" aria-label="Indicateurs clés"></section>
+
+    <section class="grid grid--two">
+      <article class="panel chart-card">
+        <div class="panel-heading">
+          <div>
+            <h2 id="main-chart-title">Top</h2>
+            <p id="main-chart-subtitle">Classement selon les filtres actifs.</p>
+          </div>
+        </div>
+        <div id="main-chart" class="chart"></div>
+      </article>
+      <article class="panel chart-card">
+        <div class="panel-heading">
+          <div>
+            <h2>Comparaison périodes</h2>
+            <p>CA ou quantités pour les filtres actifs.</p>
+          </div>
+        </div>
+        <div id="period-chart" class="chart chart--compact"></div>
+      </article>
+    </section>
+
+    <section class="grid grid--two">
+      <article class="panel chart-card">
+        <div class="panel-heading">
+          <div>
+            <h2>Répartition par marché hors GB</h2>
+            <p>Disponible depuis le 09/03/2026 uniquement.</p>
+          </div>
+        </div>
+        <div id="market-chart" class="chart chart--compact"></div>
+      </article>
+      <article class="panel chart-card">
+        <div class="panel-heading">
+          <div>
+            <h2>Mix priorité / statut</h2>
+            <p>Lecture achat des références filtrées.</p>
+          </div>
+        </div>
+        <div id="status-chart" class="chart chart--compact"></div>
+      </article>
+    </section>
+
+    <section class="panel table-card">
+      <div class="panel-heading">
+        <div>
+          <h2 id="ranking-title">Classement agrégé</h2>
+          <p id="ranking-subtitle">Agrégation dynamique par vue sélectionnée.</p>
+        </div>
+      </div>
+      <div class="table-wrap" id="ranking-table"></div>
+    </section>
+
+    <section class="panel table-card">
+      <div class="panel-heading">
+        <div>
+          <h2>Détail lignes source</h2>
+          <p id="detail-subtitle">Toutes les colonnes importantes du fichier sont conservées dans les exports.</p>
+        </div>
+        <div class="mini-actions">
+          <button id="export-references" class="button button--ghost">CSV Références complet</button>
+          <button id="export-markets" class="button button--ghost">CSV Marchés hors GB</button>
+        </div>
+      </div>
+      <div class="table-wrap" id="detail-table"></div>
+    </section>
+
+    <section class="panel source-panel">
+      <h2>Lecture du fichier source</h2>
+      <div id="source-summary" class="source-summary"></div>
+      <details>
+        <summary>Notes et règles reprises du classeur</summary>
+        <div id="source-notes" class="notes-list"></div>
+      </details>
+    </section>
+  </main>
+
+  <footer>
+    <p>Dashboard statique sans build : publier ce dossier tel quel avec GitHub Pages.</p>
+  </footer>
+
+  <script src="assets/data.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>
